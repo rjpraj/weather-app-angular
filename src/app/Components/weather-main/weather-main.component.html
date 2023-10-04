@@ -1,0 +1,51 @@
+<mat-toolbar color="primary" class="toolbar">
+    <span class="navbar-brand">WeatherApp</span>
+</mat-toolbar>
+
+<div class="input-container">
+    <input type="text" [(ngModel)]="city" placeholder="Enter city name">
+    <button mat-raised-button color="primary" class="submit-button" 
+    (click)="getWeather()">Submit</button>
+</div>
+
+<!-- weather data display logic -->
+<div class="weather-container" *ngIf="weatherData">
+    <h2 style="color: rebeccapurple;">Weather forecast for <span class="city-name">{{ city }}</span> </h2>
+    <div class="forecast-card" *ngIf="weatherData?.hourlyForecastList">
+        <h2 class="forecast-card-heading">Today's Forecast</h2>
+        <div class="forecast-card-row">
+            <div class="hourly-forecast-column" *ngFor="let hourlyWeather of weatherData.hourlyForecastList">
+                <div class="weatherWidgetRow" style="font-size: 22px;margin-top: 5px;">
+                    <p>{{ hourlyWeather.time }}</p>
+                </div>
+                <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">
+                    <p>{{ hourlyWeather.temp }}°C</p>
+                </div>
+                <div class="weatherWidgetRow" style="font-size: 22px;margin-top: 5px;">
+                    <p>{{ hourlyWeather.message }}</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="forecast-card" *ngIf="weatherData?.dailyForecastList">
+        <h2 class="forecast-card-heading">Daily Forecast</h2>
+        <div class="forecast-card-row">
+            <div class="daily-forecast-column" *ngFor="let dailyWeather of weatherData.dailyForecastList; let i=index">
+                <div class="weatherWidgetRow" style="font-size: 22px;margin-top: 5px;">
+                    <p *ngIf="i > 0">{{ getFormattedDate(dailyWeather.date) }}</p>
+                    <p *ngIf="i == 0">Today</p>
+                </div>
+                <div class="weatherWidgetRow" style="font-size: 32px;margin-top: 5px;">
+                    <p>{{ dailyWeather.high }}°C</p>
+                </div>
+                <div class="weatherWidgetRow" style="font-size: 26px;margin-top: 5px;">
+                    <p>{{ dailyWeather.low }}°C</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
